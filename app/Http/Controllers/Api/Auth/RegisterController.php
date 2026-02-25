@@ -5,16 +5,16 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\RegisterRequest;
 use App\Models\User;
-use Illuminate\Support\Facades\Hash;
+use Illuminate\Http\JsonResponse;
 
 class RegisterController extends Controller
 {
-    public function __invoke(RegisterRequest $request)
+    public function __invoke(RegisterRequest $request): JsonResponse
     {
         $user = User::query()->create([
             'name' => (string) $request->input('name'),
             'email' => (string) $request->input('email'),
-            'password' => Hash::make((string) $request->input('password')),
+            'password' => (string) $request->input('password'),
         ]);
 
         $token = $user->createToken('api')->plainTextToken;

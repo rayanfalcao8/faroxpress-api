@@ -3,17 +3,20 @@
 namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 
 class MeController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(Request $request): JsonResponse
     {
+        $authenticatedUser = $request->user();
+
         return response()->json([
             'user' => [
-                'id' => $request->user()->id,
-                'name' => $request->user()->name,
-                'email' => $request->user()->email,
+                'id' => $authenticatedUser->id,
+                'name' => $authenticatedUser->name,
+                'email' => $authenticatedUser->email,
             ],
         ]);
     }

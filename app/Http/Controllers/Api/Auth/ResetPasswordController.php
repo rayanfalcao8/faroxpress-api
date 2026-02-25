@@ -4,12 +4,13 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Auth\ResetPasswordRequest;
-use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
 {
-    public function __invoke(ResetPasswordRequest $request)
+    public function __invoke(ResetPasswordRequest $request): JsonResponse
     {
         $status = Password::reset(
             [
@@ -18,9 +19,9 @@ class ResetPasswordController extends Controller
                 'password_confirmation' => (string) $request->input('password_confirmation'),
                 'token' => (string) $request->input('token'),
             ],
-            function ($user) use ($request) {
+            function (User $user) use ($request): void {
                 $user->forceFill([
-                    'password' => Hash::make((string) $request->input('password')),
+                    'password' => (string) $request->input('password'),
                 ])->save();
 
                 $user->tokens()->delete();
