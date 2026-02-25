@@ -6,6 +6,7 @@ use App\Http\Controllers\Api\Auth\LogoutController;
 use App\Http\Controllers\Api\Auth\MeController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\Auth\ResetPasswordController;
+use App\Http\Controllers\Api\Backoffice\PingController;
 use Illuminate\Support\Facades\Route;
 
 Route::prefix('auth')->group(function () {
@@ -19,3 +20,9 @@ Route::prefix('auth')->group(function () {
         Route::post('/logout', LogoutController::class);
     });
 });
+
+Route::prefix('backoffice')
+    ->middleware(['auth:sanctum', 'role:OPERATOR,ADMIN'])
+    ->group(function () {
+        Route::get('/ping', PingController::class);
+    });
