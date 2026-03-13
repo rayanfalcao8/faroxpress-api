@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\TransferStatus;
 use Illuminate\Database\Eloquent\Concerns\HasUuids;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -23,6 +22,15 @@ class Transfer extends Model
     protected $fillable = [
         'user_id',
         'status',
+        'provider',
+        'amount_cad',
+        'fee_cad',
+        'rate',
+        'amount_xaf',
+        'recipient_name',
+        'recipient_phone',
+        'external_ref',
+        'failure_reason',
     ];
 
     /**
@@ -31,7 +39,10 @@ class Transfer extends Model
     protected function casts(): array
     {
         return [
-            'status' => TransferStatus::class,
+            'amount_cad' => 'decimal:2',
+            'fee_cad' => 'decimal:2',
+            'rate' => 'decimal:6',
+            'amount_xaf' => 'decimal:2',
         ];
     }
 
