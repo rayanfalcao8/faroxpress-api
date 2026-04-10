@@ -35,4 +35,10 @@ return [
         ],
     ],
 
+
+    'transfer' => [
+        'rate_cad_to_xaf' => env('TRANSFER_RATE_CAD_TO_XAF', 445.0),
+        'fee_cad_fixed' => env('TRANSFER_FEE_CAD_FIXED', 2.0),
+        'fee_cad_percent' => env('TRANSFER_FEE_CAD_PERCENT', 0.02),
+    ],
 ];
